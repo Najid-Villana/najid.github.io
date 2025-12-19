@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Cases - IFDSS Industry Applications</title>
+    <meta name="description" content="Explore IFDSS applications across industries: server rooms, warehouses, laboratories, manufacturing. See real-world case studies and ROI calculations.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <!-- Splide CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --safety-orange: #FF6B35;
+            --dark-slate: #2D3748;
+            --tech-blue: #3182CE;
+            --warm-white: #FAFAFA;
+            --charcoal-gray: #4A5568;
+            --alert-red: #E53E3E;
+            --success-green: #38A169;
+            --warning-amber: #D69E2E;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-slate) 0%, var(--charcoal-gray) 100%);
+            color: var(--warm-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--safety-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .use-case-card {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(49, 130, 206, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+        
+        .use-case-card:hover {
+            border-color: var(--tech-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .use-case-card.active {
+            border-color: var(--safety-orange);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--tech-blue);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--tech-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .roi-calculator {
+            background: linear-gradient(135deg, rgba(56, 161, 105, 0.1), rgba(49, 130, 206, 0.1));
+            border: 1px solid rgba(56, 161, 105, 0.3);
+        }
+        
+        .case-study-card {
+            background: rgba(45, 55, 72, 0.6);
+            border: 1px solid rgba(49, 130, 206, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .case-study-card:hover {
+            border-color: var(--safety-orange);
+            transform: scale(1.02);
+        }
+        
+        .industry-selector {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(49, 130, 206, 0.3);
+        }
+        
+        .industry-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .industry-tab.active {
+            background: var(--tech-blue);
+            color: white;
+        }
+        
+        .industry-tab:hover:not(.active) {
+            background: rgba(49, 130, 206, 0.2);
+        }
+        
+        .benefit-item {
+            background: rgba(45, 55, 72, 0.6);
+            border-left: 4px solid var(--safety-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            background: rgba(45, 55, 72, 0.8);
+            border-left-color: var(--tech-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-orange-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gradient">IFDSS</a>
+                    <div class="ml-2 text-sm text-gray-300">AI Fire Safety</div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white hover:text-blue-400">Home</a>
+                    <a href="technology.html" class="nav-link text-white hover:text-blue-400">Technology</a>
+                    <a href="about.html" class="nav-link text-white hover:text-blue-400">About</a>
+                    <a href="use-cases.html" class="nav-link text-blue-400">Use Cases</a>
+                    <a href="contact.html" class="nav-link text-white hover:text-blue-400">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6">
+                    <span class="text-gradient">Industry Applications</span><br>
+                    <span class="text-white">Versatile Fire Safety Solutions</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Discover how IFDSS adapts to different environments, providing tailored 
+                    fire detection and suppression solutions across various industries.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Selector -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Select Your Industry</h2>
+                <p class="text-xl text-gray-300">
+                    Explore how IFDSS can be customized for your specific environment
+                </p>
+            </div>
+            
+            <div class="industry-selector rounded-lg p-2 mb-12">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                    <button class="industry-tab px-4 py-3 rounded text-sm font-medium active" onclick="showIndustry('server-room')">
+                        Server Rooms
+                    </button>
+                    <button class="industry-tab px-4 py-3 rounded text-sm font-medium" onclick="showIndustry('warehouse')">
+                        Warehouses
+                    </button>
+                    <button class="industry-tab px-4 py-3 rounded text-sm font-medium" onclick="showIndustry('laboratory')">
+                        Laboratories
+                    </button>
+                    <button class="industry-tab px-4 py-3 rounded text-sm font-medium" onclick="showIndustry('manufacturing')">
+                        Manufacturing
+                    </button>
+                    <button class="industry-tab px-4 py-3 rounded text-sm font-medium" onclick="showIndustry('smart-home')">
+                        Smart Homes
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Industry Content -->
+            <div id="industry-content" class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Real-World Case Studies</h2>
+                <p class="text-xl text-gray-300">
+                    See how IFDSS has been successfully implemented across different environments
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="case-study-card p-6 rounded-lg">
+                    <img src="resources/server-room-protection.webp" alt="Data Center Case Study" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-400">Data Center Protection</h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Large-scale data center deployment protecting critical IT infrastructure 
+                        with precision waterless suppression.
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Facility Size:</span>
+                            <span class="text-white">50,000 sq ft</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Detection Time:</span>
+                            <span class="text-green-400">45ms average</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">False Alarms:</span>
+                            <span class="text-green-400">0 in 12 months</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Downtime Prevented:</span>
+                            <span class="text-orange-400">$2.3M saved</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="case-study-card p-6 rounded-lg">
+                    <img src="resources/industrial-fire-1.jpg" alt="Warehouse Case Study" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-semibold mb-3 text-orange-400">Warehouse Network</h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Multi-warehouse deployment with IoT sensor network providing 
+                        comprehensive fire monitoring across logistics operations.
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Locations:</span>
+                            <span class="text-white">12 warehouses</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Coverage Area:</span>
+                            <span class="text-white">500,000 sq ft total</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Incidents Detected:</span>
+                            <span class="text-green-400">3 potential fires</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Damage Prevented:</span>
+                            <span class="text-orange-400">$5.1M estimated</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="case-study-card p-6 rounded-lg">
+                    <img src="resources/automation-equipment.jpg" alt="Manufacturing Case Study" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-semibold mb-3 text-purple-400">Manufacturing Plant</h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        High-risk manufacturing environment with automated production lines 
+                        and flammable materials requiring specialized suppression.
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Production Lines:</span>
+                            <span class="text-white">8 automated lines</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Risk Level:</span>
+                            <span class="text-yellow-400">High (flammable materials)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Response Time:</span>
+                            <span class="text-green-400">1.2s average</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Production Saved:</span>
+                            <span class="text-orange-400">$3.8M in output</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">ROI Calculator</h2>
+                <p class="text-xl text-gray-300">
+                    Calculate the potential return on investment for your facility
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Calculator Form -->
+                <div class="roi-calculator rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6">Investment Calculator</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Industry Type</label>
+                            <select id="industry-type" class="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg focus:border-orange-500 focus:outline-none transition-colors">
+                                <option value="server-room">Server Room / Data Center</option>
+                                <option value="warehouse">Warehouse / Logistics</option>
+                                <option value="laboratory">Research Laboratory</option>
+                                <option value="manufacturing">Manufacturing Plant</option>
+                                <option value="smart-home">Smart Home Integration</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Facility Size (sq ft)</label>
+                            <input type="number" id="facility-size" placeholder="10000" class="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg focus:border-orange-500 focus:outline-none transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Asset Value ($)</label>
+                            <input type="number" id="asset-value" placeholder="500000" class="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg focus:border-orange-500 focus:outline-none transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Current Insurance Premium ($/year)</label>
+                            <input type="number" id="insurance-premium" placeholder="25000" class="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg focus:border-orange-500 focus:outline-none transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Downtime Cost ($/hour)</label>
+                            <input type="number" id="downtime-cost" placeholder="10000" class="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg focus:border-orange-500 focus:outline-none transition-colors">
+                        </div>
+                        
+                        <button onclick="calculateROI()" class="w-full bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 text-white font-semibold py-3 rounded-lg transition-all duration-300">
+                            Calculate ROI
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div class="space-y-6">
+                    <div class="use-case-card p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-4 text-green-400">Investment Analysis</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">System Cost:</span>
+                                <span id="system-cost" class="text-white font-mono">$0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Annual Savings:</span>
+                                <span id="annual-savings" class="text-green-400 font-mono">$0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Insurance Reduction:</span>
+                                <span id="insurance-savings" class="text-blue-400 font-mono">$0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Payback Period:</span>
+                                <span id="payback-period" class="text-orange-400 font-mono">0 months</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-4 text-blue-400">Risk Mitigation</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Fire Risk Reduction:</span>
+                                <span class="text-green-400 font-mono">95%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Response Time Improvement:</span>
+                                <span class="text-blue-400 font-mono">2400x faster</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">False Alarm Reduction:</span>
+                                <span class="text-orange-400 font-mono">99%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Potential Loss Prevention:</span>
+                                <span id="loss-prevention" class="text-purple-400 font-mono">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-4 text-purple-400">5-Year Projection</h4>
+                        <div id="roi-chart" style="height: 200px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Universal Benefits</h2>
+                <p class="text-xl text-gray-300">
+                    Key advantages that IFDSS brings to any environment
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-orange-400">Lightning Fast Detection</h3>
+                    <p class="text-sm text-gray-300">
+                        Detect fires in milliseconds, not minutes. Our AI vision system 
+                        identifies fire signatures before traditional sensors can respond.
+                    </p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-blue-400">Precision Targeting</h3>
+                    <p class="text-sm text-gray-300">
+                        Aim suppression agents directly at the fire source, minimizing 
+                        collateral damage to surrounding equipment and materials.
+                    </p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-green-400">Minimal False Alarms</h3>
+                    <p class="text-sm text-gray-300">
+                        Reduce false alarms by 99% compared to traditional systems. 
+                        Our AI distinguishes between real threats and environmental factors.
+                    </p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-purple-400">Remote Monitoring</h3>
+                    <p class="text-sm text-gray-300">
+                        Monitor and control your fire safety system from anywhere. 
+                        Real-time alerts and status updates via mobile app.
+                    </p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-yellow-400">Cost Optimization</h3>
+                    <p class="text-sm text-gray-300">
+                        Reduce insurance premiums and operational costs while preventing 
+                        expensive fire damage and business interruption losses.
+                    </p>
+                </div>
+                
+                <div class="benefit-item p-6 rounded-lg">
+                    <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-red-400">Easy Integration</h3>
+                    <p class="text-sm text-gray-300">
+                        Seamlessly integrate with existing building management systems 
+                        and infrastructure without major modifications.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Protect Your Facility?</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Get a customized quote and ROI analysis for your specific industry and requirements.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors">
+                    Get Custom Quote
+                </a>
+                <button onclick="openDemoForm()" class="px-8 py-4 bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-semibold rounded-lg transition-all duration-300">
+                    Request Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gradient mb-4">IFDSS</div>
+                <p class="text-gray-400 mb-6">AI-Driven Fire Detection & Suppression System</p>
+                <p class="text-sm text-gray-500">
+                    © 2025 IFDSS. University-incubated startup revolutionizing fire safety through artificial intelligence.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Industry data
+        const industryData = {
+            'server-room': {
+                title: 'Server Rooms & Data Centers',
+                image: 'resources/server-room-protection.webp',
+                description: 'Protect critical IT infrastructure with precision waterless suppression that won\'t damage sensitive electronics.',
+                challenges: [
+                    'Traditional water sprinklers destroy servers and data storage',
+                    'High-value equipment requires immediate, targeted response',
+                    'Downtime costs can exceed $10,000 per hour',
+                    'Environmental monitoring is critical for equipment health'
+                ],
+                solutions: [
+                    'AI vision detects fires in 50ms without false alarms from electronic interference',
+                    'Precision targeting aims suppression agents away from sensitive equipment',
+                    'Gas-based suppression protects electronics while eliminating fire',
+                    'Real-time monitoring provides early warning of overheating equipment'
+                ],
+                benefits: [
+                    '99.9% equipment protection guarantee',
+                    'Eliminate costly water damage from traditional sprinklers',
+                    'Reduce insurance premiums by up to 30%',
+                    '24/7 monitoring with instant mobile alerts'
+                ]
+            },
+            'warehouse': {
+                title: 'Warehouses & Logistics Centers',
+                image: 'resources/industrial-fire-1.jpg',
+                description: 'Comprehensive coverage for large storage facilities with IoT sensor networks and scalable deployment.',
+                challenges: [
+                    'Large open spaces make traditional detection ineffective',
+                    'High ceilings and air circulation delay smoke detection',
+                    'Flammable materials and packaging create fire risks',
+                    'Multiple zones require coordinated response'
+                ],
+                solutions: [
+                    'Mesh network of IoT sensors provides complete coverage',
+                    'AI vision works at any height and angle',
+                    'Automated zone isolation prevents fire spread',
+                    'Scalable system grows with facility expansion'
+                ],
+                benefits: [
+                    'Protect inventory worth millions of dollars',
+                    'Prevent supply chain disruption',
+                    'Reduce insurance costs and improve safety ratings',
+                    'Minimize false alarms from dust and normal operations'
+                ]
+            },
+            'laboratory': {
+                title: 'Research Laboratories',
+                image: 'resources/automation-equipment.jpg',
+                description: 'Specialized protection for chemical and biological research environments with hazardous materials.',
+                challenges: [
+                    'Chemical reactions can cause rapid fire development',
+                    'Hazardous materials require specific suppression agents',
+                    'Ventilation systems can spread fire and smoke quickly',
+                    'Expensive research equipment is highly sensitive'
+                ],
+                solutions: [
+                    'Multi-sensor fusion detects chemical fires instantly',
+                    'Smart agent selection based on fire type and materials',
+                    'Integration with ventilation systems for smoke control',
+                    'Precision targeting protects valuable research equipment'
+                ],
+                benefits: [
+                    'Prevent loss of years of research data',
+                    'Protect against chemical fire spread',
+                    'Maintain research continuity and funding',
+                    'Ensure researcher safety and regulatory compliance'
+                ]
+            },
+            'manufacturing': {
+                title: 'Manufacturing Plants',
+                image: 'resources/industrial-fire-2.jpg',
+                description: 'High-risk manufacturing environments with automated production lines and industrial processes.',
+                challenges: [
+                    'Automated machinery creates unique fire risks',
+                    'Production downtime costs thousands per hour',
+                    'Flammable materials and industrial processes',
+                    'Complex layouts with multiple fire zones'
+                ],
+                solutions: [
+                    'AI learns normal vs. abnormal heat signatures',
+                    'Integration with production line emergency stops',
+                    'Multi-agent suppression for different fire types',
+                    'Predictive maintenance alerts prevent fires'
+                ],
+                benefits: [
+                    'Prevent production line shutdowns',
+                    'Protect workers and maintain safety records',
+                    'Reduce insurance premiums and liability',
+                    'Improve overall plant safety and efficiency'
+                ]
+            },
+            'smart-home': {
+                title: 'Smart Home Integration',
+                image: 'resources/iot-sensors.jpg',
+                description: 'Advanced fire safety for modern homes with seamless integration into smart home ecosystems.',
+                challenges: [
+                    'Traditional smoke detectors have high false alarm rates',
+                    'Kitchen cooking can trigger unnecessary alerts',
+                    'Homeowners need remote monitoring capabilities',
+                    'Integration with other smart home systems'
+                ],
+                solutions: [
+                    'AI distinguishes between cooking and real fires',
+                    'Smart home integration with lighting and HVAC',
+                    'Mobile app provides remote monitoring and control',
+                    'Voice alerts and automated emergency calls'
+                ],
+                benefits: [
+                    'Peace of mind for homeowners and families',
+                    'Reduce false alarms from cooking and steam',
+                    'Remote monitoring while away from home',
+                    'Increase property value and safety rating'
+                ]
+            }
+        };
+
+        // Show industry content
+        function showIndustry(industryId) {
+            // Update active tab
+            document.querySelectorAll('.industry-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const data = industryData[industryId];
+            const contentDiv = document.getElementById('industry-content');
+
+            contentDiv.innerHTML = `
+                <div class="space-y-8">
+                    <img src="${data.image}" alt="${data.title}" class="w-full rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold text-gradient">${data.title}</h2>
+                    <p class="text-lg text-gray-300">${data.description}</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-red-400">Key Challenges</h3>
+                            <ul class="space-y-2">
+                                ${data.challenges.map(challenge => `
+                                    <li class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span class="text-gray-300">${challenge}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-blue-400">IFDSS Solutions</h3>
+                            <ul class="space-y-2">
+                                ${data.solutions.map(solution => `
+                                    <li class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span class="text-gray-300">${solution}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="use-case-card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-green-400">Key Benefits</h3>
+                        <ul class="space-y-3">
+                            ${data.benefits.map(benefit => `
+                                <li class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-gray-300">${benefit}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="use-case-card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-orange-400">Get Started</h3>
+                        <p class="text-gray-300 mb-4">
+                            Ready to protect your ${data.title.toLowerCase()} with IFDSS?
+                        </p>
+                        <div class="space-y-3">
+                            <button onclick="openDemoForm()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                                Request Live Demo
+                            </button>
+                            <a href="contact.html" class="block w-full text-center bg-transparent border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+                                Get Custom Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Animate content change
+            anime({
+                targets: contentDiv,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 500,
+                easing: 'easeOutQuart'
+            });
+        }
+
+        // ROI Calculator
+        function calculateROI() {
+            const industry = document.getElementById('industry-type').value;
+            const size = parseInt(document.getElementById('facility-size').value) || 10000;
+            const assetValue = parseInt(document.getElementById('asset-value').value) || 500000;
+            const insurance = parseInt(document.getElementById('insurance-premium').value) || 25000;
+            const downtime = parseInt(document.getElementById('downtime-cost').value) || 10000;
+
+            // System cost calculation (simplified)
+            const baseCost = 50000;
+            const sizeMultiplier = Math.sqrt(size / 10000);
+            const systemCost = Math.round(baseCost * sizeMultiplier);
+
+            // Annual savings calculation
+            const insuranceSavings = Math.round(insurance * 0.25); // 25% reduction
+            const riskReduction = Math.round(assetValue * 0.02); // 2% of asset value
+            const annualSavings = insuranceSavings + riskReduction;
+
+            // Payback period
+            const paybackMonths = Math.round((systemCost / annualSavings) * 12);
+
+            // Loss prevention (5-year projection)
+            const lossPrevention = Math.round(assetValue * 0.05); // 5% of asset value
+
+            // Update display
+            document.getElementById('system-cost').textContent = `$${systemCost.toLocaleString()}`;
+            document.getElementById('annual-savings').textContent = `$${annualSavings.toLocaleString()}`;
+            document.getElementById('insurance-savings').textContent = `$${insuranceSavings.toLocaleString()}`;
+            document.getElementById('payback-period').textContent = `${paybackMonths} months`;
+            document.getElementById('loss-prevention').textContent = `$${lossPrevention.toLocaleString()}`;
+
+            // Create ROI chart
+            createROIChart(systemCost, annualSavings);
+        }
+
+        function createROIChart(systemCost, annualSavings) {
+            const chart = echarts.init(document.getElementById('roi-chart'));
+            
+            const option = {
+                backgroundColor: 'transparent',
+                textStyle: { color: '#FAFAFA' },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#2D3748',
+                    borderColor: '#FF6B35',
+                    textStyle: { color: '#FAFAFA' }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                    axisLine: { lineStyle: { color: '#4A5568' } },
+                    axisLabel: { color: '#FAFAFA', fontSize: 10 }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Cumulative ROI ($)',
+                    nameTextStyle: { color: '#FAFAFA', fontSize: 10 },
+                    axisLine: { lineStyle: { color: '#4A5568' } },
+                    axisLabel: { color: '#FAFAFA', fontSize: 10 },
+                    splitLine: { lineStyle: { color: '#4A5568' } }
+                },
+                series: [{
+                    name: 'Cumulative ROI',
+                    type: 'line',
+                    data: [
+                        -systemCost + annualSavings,
+                        -systemCost + annualSavings * 2,
+                        -systemCost + annualSavings * 3,
+                        -systemCost + annualSavings * 4,
+                        -systemCost + annualSavings * 5
+                    ],
+                    itemStyle: { color: '#38A169' },
+                    lineStyle: { color: '#38A169' },
+                    smooth: true,
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: 'rgba(56, 161, 105, 0.3)' },
+                                { offset: 1, color: 'rgba(56, 161, 105, 0.1)' }
+                            ]
+                        }
+                    }
+                }]
+            };
+            
+            chart.setOption(option);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show default industry
+            showIndustry('server-room');
+            
+            // Initialize ROI calculator with default values
+            calculateROI();
+            
+            // Initialize animations
+            const cards = document.querySelectorAll('.use-case-card, .case-study-card, .benefit-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [30, 0],
+                            duration: 800,
+                            easing: 'easeOutQuart',
+                            delay: Math.random() * 200
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - IFDSS Team & University Backing</title>
+    <meta name="description" content="Meet the engineering team behind IFDSS and learn about our university incubation. AI/ML specialists, hardware engineers, and IoT experts building the future of fire safety.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <!-- Splide CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --safety-orange: #FF6B35;
+            --dark-slate: #2D3748;
+            --tech-blue: #3182CE;
+            --warm-white: #FAFAFA;
+            --charcoal-gray: #4A5568;
+            --alert-red: #E53E3E;
+            --success-green: #38A169;
+            --warning-amber: #D69E2E;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-slate) 0%, var(--charcoal-gray) 100%);
+            color: var(--warm-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--safety-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .team-card {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(49, 130, 206, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .team-card:hover {
+            border-color: var(--tech-blue);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--tech-blue);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--tech-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--safety-orange);
+            border-radius: 50%;
+            border: 3px solid var(--dark-slate);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, var(--safety-orange), transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(49, 130, 206, 0.2));
+            border: 1px solid rgba(56, 161, 105, 0.3);
+        }
+        
+        .university-section {
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.1), rgba(255, 107, 53, 0.1));
+            border: 1px solid rgba(49, 130, 206, 0.3);
+        }
+        
+        .skill-bar {
+            background: rgba(45, 55, 72, 0.8);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            background: linear-gradient(90deg, var(--safety-orange), var(--tech-blue));
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-orange-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gradient">IFDSS</a>
+                    <div class="ml-2 text-sm text-gray-300">AI Fire Safety</div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white hover:text-blue-400">Home</a>
+                    <a href="technology.html" class="nav-link text-white hover:text-blue-400">Technology</a>
+                    <a href="about.html" class="nav-link text-blue-400">About</a>
+                    <a href="use-cases.html" class="nav-link text-white hover:text-blue-400">Use Cases</a>
+                    <a href="contact.html" class="nav-link text-white hover:text-blue-400">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6">
+                    <span class="text-gradient">Meet Our Team</span><br>
+                    <span class="text-white">Engineering Excellence</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    A dedicated team of AI specialists, hardware engineers, and IoT experts 
+                    backed by university research and industry experience.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6">From Final Year Project to Innovation</h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        IFDSS began as a Final Year Project at a leading engineering university, 
+                        where our team identified critical gaps in traditional fire safety systems. 
+                        What started as an academic exercise has evolved into a commercial-ready 
+                        solution that's reshaping industrial safety standards.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6">
+                        Our journey from university lab to market-ready product demonstrates the 
+                        power of combining academic rigor with practical engineering. We've 
+                        maintained our commitment to research-backed innovation while developing 
+                        a solution that addresses real-world safety challenges.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="achievement-badge px-4 py-2 rounded-full">
+                            <span class="text-sm font-medium text-green-400">University Incubated</span>
+                        </div>
+                        <div class="achievement-badge px-4 py-2 rounded-full">
+                            <span class="text-sm font-medium text-blue-400">Research-Backed</span>
+                        </div>
+                        <div class="achievement-badge px-4 py-2 rounded-full">
+                            <span class="text-sm font-medium text-orange-400">Industry Ready</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="bg-slate-700/50 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Development Timeline</h3>
+                        <div class="space-y-6">
+                            <div class="timeline-item">
+                                <div class="text-sm text-gray-400 mb-1">January 2024</div>
+                                <h4 class="font-semibold text-orange-400 mb-2">Project Inception</h4>
+                                <p class="text-sm text-gray-300">Final Year Project proposal submitted and approved by university committee.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="text-sm text-gray-400 mb-1">March 2024</div>
+                                <h4 class="font-semibold text-blue-400 mb-2">First Prototype</h4>
+                                <p class="text-sm text-gray-300">Initial proof-of-concept demonstrating AI fire detection capabilities.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="text-sm text-gray-400 mb-1">June 2024</div>
+                                <h4 class="font-semibold text-green-400 mb-2">University Incubation</h4>
+                                <p class="text-sm text-gray-300">Accepted into university startup incubator program with funding support.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="text-sm text-gray-400 mb-1">September 2024</div>
+                                <h4 class="font-semibold text-purple-400 mb-2">Beta Testing</h4>
+                                <p class="text-sm text-gray-300">Field testing with partner organizations and continuous system refinement.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="text-sm text-gray-400 mb-1">December 2024</div>
+                                <h4 class="font-semibold text-yellow-400 mb-2">Commercial Launch</h4>
+                                <p class="text-sm text-gray-300">Product ready for commercial deployment with full feature set.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Members -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Our Engineering Team</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    A multidisciplinary team combining expertise in artificial intelligence, 
+                    hardware engineering, and IoT systems development.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- AI/ML Lead -->
+                <div class="team-card p-8 rounded-lg text-center">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-orange-500/30">
+                        <img src="resources/team-ai-lead.jpg" alt="AI/ML Lead" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-orange-400">Alex Chen</h3>
+                    <p class="text-lg text-gray-300 mb-4">AI/ML Lead & System Architect</p>
+                    <p class="text-sm text-gray-400 mb-6">
+                        Computer Vision specialist with expertise in YOLO algorithms and edge computing. 
+                        Leads the AI model development and optimization for real-time fire detection.
+                    </p>
+                    
+                    <!-- Skills -->
+                    <div class="space-y-3 mb-6">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Computer Vision</span>
+                                <span class="text-orange-400">95%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">YOLO/Deep Learning</span>
+                                <span class="text-orange-400">92%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Edge Computing</span>
+                                <span class="text-orange-400">88%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs text-gray-500">
+                        <div>• M.S. Computer Science, AI Specialization</div>
+                        <div>• 3+ years ML engineering experience</div>
+                        <div>• Published researcher in computer vision</div>
+                    </div>
+                </div>
+                
+                <!-- Hardware Lead -->
+                <div class="team-card p-8 rounded-lg text-center">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-blue-500/30">
+                        <img src="resources/team-hardware-lead.jpg" alt="Hardware Lead" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-blue-400">Hafiz Shahid</h3>
+                    <p class="text-lg text-gray-300 mb-4">Hardware Lead & Mechanical Engineer</p>
+                    <p class="text-sm text-gray-400 mb-6">
+                        Embedded systems expert specializing in IoT sensor networks and precision mechanical design. 
+                        Responsible for hardware integration and system reliability.
+                    </p>
+                    
+                    <!-- Skills -->
+                    <div class="space-y-3 mb-6">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Embedded Systems</span>
+                                <span class="text-blue-400">94%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="94"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Mechanical Design</span>
+                                <span class="text-blue-400">90%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">IoT Networks</span>
+                                <span class="text-blue-400">91%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="91"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs text-gray-500">
+                        <div>• B.S. Electrical Engineering</div>
+                        <div>• 4+ years hardware development</div>
+                        <div>• IoT systems integration specialist</div>
+                    </div>
+                </div>
+                
+                <!-- IoT Lead -->
+                <div class="team-card p-8 rounded-lg text-center">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-green-500/30">
+                        <img src="resources/team-iot-lead.jpg" alt="IoT Lead" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-green-400">Arslan Ahmed</h3>
+                    <p class="text-lg text-gray-300 mb-4">IoT Lead & Mobile Developer</p>
+                    <p class="text-sm text-gray-400 mb-6">
+                        Full-stack developer with expertise in cloud platforms and mobile applications. 
+                        Leads the development of our Firebase integration and mobile app interface.
+                    </p>
+                    
+                    <!-- Skills -->
+                    <div class="space-y-3 mb-6">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Cloud Platforms</span>
+                                <span class="text-green-400">93%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="93"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Mobile Development</span>
+                                <span class="text-green-400">89%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="89"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">System Integration</span>
+                                <span class="text-green-400">91%</span>
+                            </div>
+                            <div class="skill-bar h-2">
+                                <div class="skill-progress" data-width="91"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs text-gray-500">
+                        <div>• B.S. Software Engineering</div>
+                        <div>• 3+ years full-stack development</div>
+                        <div>• Firebase certified developer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- University Partnership -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="university-section rounded-2xl p-12">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-6">University Backing & Research</h2>
+                        <p class="text-lg text-gray-300 mb-6">
+                            IFDSS is proud to be incubated at a leading engineering university, 
+                            providing us with access to world-class research facilities, academic expertise, 
+                            and a pipeline of emerging talent in AI and engineering fields.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-400 mb-1">Research Facilities Access</h4>
+                                    <p class="text-sm text-gray-300">State-of-the-art AI labs and testing facilities</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-green-400 mb-1">Academic Mentorship</h4>
+                                    <p class="text-sm text-gray-300">Guidance from leading AI and engineering professors</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                    <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-orange-400 mb-1">Validation & Testing</h4>
+                                    <p class="text-sm text-gray-300">Rigorous academic validation of our AI models</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Academic Excellence</h3>
+                        <p class="text-gray-300 mb-6">
+                            Our university partnership ensures continuous innovation and 
+                            access to the latest research in AI and safety engineering.
+                        </p>
+                        <a href="contact.html" class="inline-block bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300">
+                            Learn More About Our Research
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Our Vision & Mission</h2>
+                <p class="text-xl text-gray-300">
+                    Transforming industrial safety through intelligent, AI-driven solutions
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="team-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-orange-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-orange-400">Our Vision</h3>
+                    <p class="text-gray-300 mb-6">
+                        To create a world where fire-related industrial accidents are virtually eliminated 
+                        through intelligent, proactive safety systems that think, learn, and respond 
+                        faster than any human operator could.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                            <span>Zero tolerance for fire safety failures</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                            <span>AI-driven predictive safety systems</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                            <span>Global adoption of intelligent fire prevention</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="team-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-400">Our Mission</h3>
+                    <p class="text-gray-300 mb-6">
+                        To provide industries with the most advanced fire detection and suppression 
+                        technology, combining cutting-edge AI with robust engineering to protect 
+                        lives, assets, and operations from fire-related disasters.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                            <span>Millisecond detection and response</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                            <span>Precision-targeted suppression</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                            <span>Continuous learning and improvement</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Revolutionize Your Fire Safety?</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Connect with our engineering team to discuss how IFDSS can transform 
+                your facility's fire detection and suppression capabilities.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors">
+                    Contact Our Engineers
+                </a>
+                <a href="technology.html" class="px-8 py-4 bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-semibold rounded-lg transition-all duration-300">
+                    Explore Technology
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gradient mb-4">IFDSS</div>
+                <p class="text-gray-400 mb-6">AI-Driven Fire Detection & Suppression System</p>
+                <p class="text-sm text-gray-500">
+                    © 2025 IFDSS. University-incubated startup revolutionizing fire safety through artificial intelligence.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSkillBars();
+            initializeAnimations();
+        });
+
+        function initializeSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        anime({
+                            targets: entry.target,
+                            width: width + '%',
+                            duration: 1500,
+                            easing: 'easeOutQuart',
+                            delay: 200
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+        }
+
+        function initializeAnimations() {
+            // Animate team cards
+            const teamCards = document.querySelectorAll('.team-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [50, 0],
+                            duration: 800,
+                            easing: 'easeOutQuart',
+                            delay: Math.random() * 300
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            teamCards.forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+
+            // Animate timeline items
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateX: [-30, 0],
+                            duration: 600,
+                            easing: 'easeOutQuart',
+                            delay: 200
+                        });
+                        timelineObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            timelineItems.forEach(item => {
+                item.style.opacity = '0';
+                timelineObserver.observe(item);
+            });
+        }
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

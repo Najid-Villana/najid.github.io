@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology - IFDSS AI Fire Detection System</title>
+    <meta name="description" content="Deep dive into IFDSS technology: YOLOv8 AI detection, NVIDIA Jetson Nano processing, IoT sensor networks, and precision suppression targeting.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <!-- Splide CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --safety-orange: #FF6B35;
+            --dark-slate: #2D3748;
+            --tech-blue: #3182CE;
+            --warm-white: #FAFAFA;
+            --charcoal-gray: #4A5568;
+            --alert-red: #E53E3E;
+            --success-green: #38A169;
+            --warning-amber: #D69E2E;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-slate) 0%, var(--charcoal-gray) 100%);
+            color: var(--warm-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--safety-orange), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tech-card {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(49, 130, 206, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tech-card:hover {
+            border-color: var(--tech-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .spec-item {
+            background: rgba(45, 55, 72, 0.6);
+            border-left: 4px solid var(--safety-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .spec-item:hover {
+            background: rgba(45, 55, 72, 0.8);
+            border-left-color: var(--tech-blue);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--tech-blue);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--tech-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .system-diagram {
+            position: relative;
+            background: rgba(45, 55, 72, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .component-hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--safety-orange);
+            border-radius: 50%;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        
+        .component-hotspot:hover {
+            transform: scale(1.2);
+            background: var(--tech-blue);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        .performance-metric {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(49, 130, 206, 0.1));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        .comparison-table {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(49, 130, 206, 0.3);
+        }
+        
+        .download-section {
+            background: linear-gradient(135deg, rgba(56, 161, 105, 0.1), rgba(49, 130, 206, 0.1));
+            border: 1px solid rgba(56, 161, 105, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-orange-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gradient">IFDSS</a>
+                    <div class="ml-2 text-sm text-gray-300">AI Fire Safety</div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white hover:text-blue-400">Home</a>
+                    <a href="technology.html" class="nav-link text-blue-400">Technology</a>
+                    <a href="about.html" class="nav-link text-white hover:text-blue-400">About</a>
+                    <a href="use-cases.html" class="nav-link text-white hover:text-blue-400">Use Cases</a>
+                    <a href="contact.html" class="nav-link text-white hover:text-blue-400">Contact</a>
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6">
+                    <span class="text-gradient">Advanced Technology</span><br>
+                    <span class="text-white">Behind IFDSS</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Discover the cutting-edge AI, IoT, and mechanical systems that make IFDSS 
+                    the most advanced fire detection and suppression solution available.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive System Architecture -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">System Architecture</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Click on the hotspots to explore each component of the IFDSS system
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- System Diagram -->
+                <div class="lg:col-span-2">
+                    <div class="system-diagram p-8 relative">
+                        <img src="resources/tech-diagram.jpg" alt="IFDSS System Architecture" class="w-full rounded-lg">
+                        
+                        <!-- Component Hotspots -->
+                        <div class="component-hotspot" style="top: 25%; left: 20%;" 
+                             onclick="showComponentDetails('camera')" 
+                             data-tooltip="High-Resolution AI Camera"></div>
+                        
+                        <div class="component-hotspot" style="top: 45%; left: 50%;" 
+                             onclick="showComponentDetails('processor')" 
+                             data-tooltip="NVIDIA Jetson Nano Processor"></div>
+                        
+                        <div class="component-hotspot" style="top: 65%; left: 30%;" 
+                             onclick="showComponentDetails('iot')" 
+                             data-tooltip="ESP8266 IoT Sensor Network"></div>
+                        
+                        <div class="component-hotspot" style="top: 75%; left: 70%;" 
+                             onclick="showComponentDetails('mechanical')" 
+                             data-tooltip="Pan-Tilt Suppression System"></div>
+                    </div>
+                </div>
+                
+                <!-- Component Details Panel -->
+                <div class="space-y-6">
+                    <div id="component-details" class="tech-card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-orange-400">System Overview</h3>
+                        <p class="text-gray-300 mb-4">
+                            IFDSS combines computer vision, IoT sensors, and precision mechanics 
+                            to create the fastest, most accurate fire detection system available.
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-center text-sm">
+                                <div class="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
+                                <span>Click hotspots to explore components</span>
+                            </div>
+                            <div class="flex items-center text-sm">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                                <span>Real-time system monitoring</span>
+                            </div>
+                            <div class="flex items-center text-sm">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                                <span>Automated suppression response</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Metrics -->
+                    <div class="performance-metric p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold mb-4">Key Performance Metrics</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Detection Speed</span>
+                                <span class="text-orange-400 font-mono">50ms</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Accuracy Rate</span>
+                                <span class="text-blue-400 font-mono">99.7%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Response Time</span>
+                                <span class="text-green-400 font-mono">< 2s</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">False Alarm Rate</span>
+                                <span class="text-yellow-400 font-mono">0.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Components -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Core Technology Components</h2>
+                <p class="text-xl text-gray-300">
+                    Each component is optimized for maximum performance and reliability
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- YOLOv8 AI Detection -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-orange-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">YOLOv8 AI Detection</h3>
+                    <p class="text-gray-300 mb-4">
+                        State-of-the-art computer vision algorithm specifically trained for fire detection 
+                        with unprecedented accuracy and speed.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Detection Speed</div>
+                            <div class="text-orange-400 font-mono">0.05 seconds</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Accuracy Rate</div>
+                            <div class="text-orange-400 font-mono">99.7%</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">False Positive Rate</div>
+                            <div class="text-orange-400 font-mono">0.3%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NVIDIA Jetson Nano -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-400">NVIDIA Jetson Nano</h3>
+                    <p class="text-gray-300 mb-4">
+                        Edge AI computing platform that processes video streams in real-time, 
+                        running our optimized YOLOv8 model with maximum efficiency.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">GPU Cores</div>
+                            <div class="text-blue-400 font-mono">128-core Maxwell</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">CPU</div>
+                            <div class="text-blue-400 font-mono">Quad-core ARM A57</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Memory</div>
+                            <div class="text-blue-400 font-mono">4GB LPDDR4</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IoT Sensor Network -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-green-400">IoT Sensor Network</h3>
+                    <p class="text-gray-300 mb-4">
+                        ESP8266-based sensor nodes create a robust mesh network for comprehensive 
+                        environmental monitoring and system communication.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">WiFi Standard</div>
+                            <div class="text-green-400 font-mono">802.11 b/g/n</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Range</div>
+                            <div class="text-green-400 font-mono">Up to 100m</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Power Consumption</div>
+                            <div class="text-green-400 font-mono">< 1W per node</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pan-Tilt Mechanism -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">Precision Pan-Tilt</h3>
+                    <p class="text-gray-300 mb-4">
+                        High-precision mechanical system that aims suppression agents with 
+                        sub-degree accuracy for maximum effectiveness.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Targeting Accuracy</div>
+                            <div class="text-purple-400 font-mono">±2cm at 10m</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Rotation Speed</div>
+                            <div class="text-purple-400 font-mono">180° in 2 seconds</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Load Capacity</div>
+                            <div class="text-purple-400 font-mono">Up to 5kg</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Firebase Integration -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-yellow-400">Firebase Cloud</h3>
+                    <p class="text-gray-300 mb-4">
+                        Google's Firebase platform provides real-time data synchronization, 
+                        mobile app integration, and secure cloud storage.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Real-time Sync</div>
+                            <div class="text-yellow-400 font-mono">< 100ms latency</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Uptime</div>
+                            <div class="text-yellow-400 font-mono">99.9% SLA</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Data Security</div>
+                            <div class="text-yellow-400 font-mono">AES-256 Encryption</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suppression System -->
+                <div class="tech-card p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-red-400">Smart Suppression</h3>
+                    <p class="text-gray-300 mb-4">
+                        Intelligent suppression system that selects the optimal agent and 
+                        delivery method based on fire type and environmental conditions.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Response Time</div>
+                            <div class="text-red-400 font-mono">< 2 seconds</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Agent Options</div>
+                            <div class="text-red-400 font-mono">Water, Foam, Gas</div>
+                        </div>
+                        <div class="spec-item p-3 rounded">
+                            <div class="text-sm text-gray-400">Flow Rate</div>
+                            <div class="text-red-400 font-mono">Up to 100 L/min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Comparison -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Technology Comparison</h2>
+                <p class="text-xl text-gray-300">
+                    See how IFDSS technology stacks up against traditional fire safety systems
+                </p>
+            </div>
+            
+            <div class="comparison-table rounded-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-700">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Feature</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-red-400">Traditional Systems</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-green-400">IFDSS AI System</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Detection Method</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">Smoke particles</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">Computer vision AI</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Response Time</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">2-5 minutes</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">50 milliseconds</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Accuracy Rate</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">70-85%</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">99.7%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">False Alarms</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">15-30%</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">0.3%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Automated Suppression</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">No</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">Yes, precision targeted</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Remote Monitoring</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">Limited</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">Full mobile app control</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Installation Flexibility</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">Ceiling only</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">Any position, any angle</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-300">Maintenance Requirements</td>
+                                <td class="px-6 py-4 text-sm text-center text-gray-400">Monthly testing</td>
+                                <td class="px-6 py-4 text-sm text-center text-green-400">Self-diagnostic, annual</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Technical Specifications</h2>
+                <p class="text-xl text-gray-300">
+                    Detailed technical specifications for system integrators and engineers
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Performance Charts -->
+                <div class="space-y-8">
+                    <div class="tech-card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Detection Performance</h3>
+                        <div id="detection-chart" style="height: 300px;"></div>
+                    </div>
+                    
+                    <div class="tech-card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">System Throughput</h3>
+                        <div id="throughput-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+                
+                <!-- Specifications Table -->
+                <div class="tech-card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-6">Complete Specifications</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-3 text-orange-400">Processing Unit</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Platform</span>
+                                    <span class="text-white font-mono">NVIDIA Jetson Nano</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">GPU</span>
+                                    <span class="text-white font-mono">128-core Maxwell</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">CPU</span>
+                                    <span class="text-white font-mono">Quad-core ARM A57 @ 1.43GHz</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Memory</span>
+                                    <span class="text-white font-mono">4GB 64-bit LPDDR4</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Storage</span>
+                                    <span class="text-white font-mono">32GB eMMC + MicroSD slot</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-3 text-blue-400">AI & Vision</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Model</span>
+                                    <span class="text-white font-mono">YOLOv8 Custom Trained</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Input Resolution</span>
+                                    <span class="text-white font-mono">1920x1080 @ 30fps</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Detection Classes</span>
+                                    <span class="text-white font-mono">Fire, Smoke, Heat Signature</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Processing Speed</span>
+                                    <span class="text-white font-mono">50ms per frame</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-3 text-green-400">Connectivity</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">WiFi</span>
+                                    <span class="text-white font-mono">802.11 b/g/n 2.4GHz</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Ethernet</span>
+                                    <span class="text-white font-mono">10/100/1000 Mbps</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Bluetooth</span>
+                                    <span class="text-white font-mono">BLE 4.2</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Cloud Platform</span>
+                                    <span class="text-white font-mono">Google Firebase</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-3 text-purple-400">Mechanical</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Pan Range</span>
+                                    <span class="text-white font-mono">360° continuous</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Tilt Range</span>
+                                    <span class="text-white font-mono">-90° to +90°</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Accuracy</span>
+                                    <span class="text-white font-mono">±2cm at 10m distance</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Speed</span>
+                                    <span class="text-white font-mono">180° in 2 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="download-section rounded-2xl p-12 text-center">
+                <h2 class="text-4xl font-bold mb-6">Technical Documentation</h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Access comprehensive technical documentation, installation guides, 
+                    and integration resources for IFDSS systems.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="tech-card p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">System Datasheet</h3>
+                        <p class="text-sm text-gray-300 mb-4">Complete technical specifications and performance data</p>
+                        <button onclick="downloadDocument('datasheet')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="tech-card p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Installation Guide</h3>
+                        <p class="text-sm text-gray-300 mb-4">Step-by-step installation and configuration instructions</p>
+                        <button onclick="downloadDocument('installation')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="tech-card p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">API Documentation</h3>
+                        <p class="text-sm text-gray-300 mb-4">Integration APIs and developer resources</p>
+                        <button onclick="downloadDocument('api')" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            Download PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="contact.html" class="inline-block bg-gradient-to-r from-orange-500 to-blue-500 hover:from-orange-600 hover:to-blue-600 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300">
+                        Contact Our Engineers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gradient mb-4">IFDSS</div>
+                <p class="text-gray-400 mb-6">AI-Driven Fire Detection & Suppression System</p>
+                <p class="text-sm text-gray-500">
+                    © 2025 IFDSS. University-incubated startup revolutionizing fire safety through artificial intelligence.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Component details data
+        const componentDetails = {
+            camera: {
+                title: "AI Vision Camera",
+                description: "High-resolution camera optimized for computer vision applications with infrared capabilities for low-light detection.",
+                specs: [
+                    "Resolution: 1920x1080 @ 30fps",
+                    "Infrared: 940nm night vision",
+                    "Lens: 3.6mm wide angle",
+                    "Processing: Real-time video encoding"
+                ]
+            },
+            processor: {
+                title: "NVIDIA Jetson Nano",
+                description: "Edge AI computing platform that processes video streams and runs the YOLOv8 detection model in real-time.",
+                specs: [
+                    "GPU: 128-core Maxwell",
+                    "CPU: Quad-core ARM A57",
+                    "Memory: 4GB LPDDR4",
+                    "AI Performance: 472 GFLOPS"
+                ]
+            },
+            iot: {
+                title: "IoT Sensor Network",
+                description: "Mesh network of ESP8266 sensors providing environmental monitoring and system communication.",
+                specs: [
+                    "WiFi: 802.11 b/g/n",
+                    "Range: Up to 100m",
+                    "Sensors: Temperature, humidity, smoke",
+                    "Power: < 1W per node"
+                ]
+            },
+            mechanical: {
+                title: "Pan-Tilt Suppression",
+                description: "Precision mechanical system that aims suppression agents with sub-degree accuracy.",
+                specs: [
+                    "Accuracy: ±2cm at 10m",
+                    "Speed: 180° in 2 seconds",
+                    "Load: Up to 5kg",
+                    "Control: Stepper motor driven"
+                ]
+            }
+        };
+
+        // Show component details
+        function showComponentDetails(componentId) {
+            const details = componentDetails[componentId];
+            const detailsPanel = document.getElementById('component-details');
+            
+            if (details && detailsPanel) {
+                detailsPanel.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">${details.title}</h3>
+                    <p class="text-gray-300 mb-4">${details.description}</p>
+                    <div class="space-y-2">
+                        ${details.specs.map(spec => `
+                            <div class="flex items-center text-sm">
+                                <div class="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
+                                <span>${spec}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                // Animate the panel
+                anime({
+                    targets: detailsPanel,
+                    scale: [0.95, 1],
+                    opacity: [0.7, 1],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTechCharts();
+            initializeAnimations();
+        });
+
+        function initializeTechCharts() {
+            // Detection Performance Chart
+            const detectionChart = echarts.init(document.getElementById('detection-chart'));
+            if (detectionChart) {
+                const detectionOption = {
+                    backgroundColor: 'transparent',
+                    textStyle: { color: '#FAFAFA' },
+                    tooltip: {
+                        trigger: 'axis',
+                        backgroundColor: '#2D3748',
+                        borderColor: '#FF6B35',
+                        textStyle: { color: '#FAFAFA' }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['Fire Detection', 'Smoke Detection', 'Heat Detection', 'False Alarms'],
+                        axisLine: { lineStyle: { color: '#4A5568' } },
+                        axisLabel: { color: '#FAFAFA' }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: 'Accuracy (%)',
+                        nameTextStyle: { color: '#FAFAFA' },
+                        axisLine: { lineStyle: { color: '#4A5568' } },
+                        axisLabel: { color: '#FAFAFA' },
+                        splitLine: { lineStyle: { color: '#4A5568' } }
+                    },
+                    series: [{
+                        name: 'IFDSS Performance',
+                        type: 'bar',
+                        data: [99.7, 99.5, 98.9, 0.3],
+                        itemStyle: {
+                            color: function(params) {
+                                const colors = ['#FF6B35', '#3182CE', '#38A169', '#D69E2E'];
+                                return colors[params.dataIndex];
+                            }
+                        }
+                    }]
+                };
+                detectionChart.setOption(detectionOption);
+            }
+
+            // Throughput Chart
+            const throughputChart = echarts.init(document.getElementById('throughput-chart'));
+            if (throughputChart) {
+                const throughputOption = {
+                    backgroundColor: 'transparent',
+                    textStyle: { color: '#FAFAFA' },
+                    tooltip: {
+                        trigger: 'axis',
+                        backgroundColor: '#2D3748',
+                        borderColor: '#FF6B35',
+                        textStyle: { color: '#FAFAFA' }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['Video Input', 'AI Processing', 'Decision Making', 'Suppression'],
+                        axisLine: { lineStyle: { color: '#4A5568' } },
+                        axisLabel: { color: '#FAFAFA' }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: 'Time (ms)',
+                        nameTextStyle: { color: '#FAFAFA' },
+                        axisLine: { lineStyle: { color: '#4A5568' } },
+                        axisLabel: { color: '#FAFAFA' },
+                        splitLine: { lineStyle: { color: '#4A5568' } }
+                    },
+                    series: [{
+                        name: 'Processing Time',
+                        type: 'line',
+                        data: [33, 50, 100, 2000],
+                        itemStyle: { color: '#3182CE' },
+                        lineStyle: { color: '#3182CE' },
+                        smooth: true
+                    }]
+                };
+                throughputChart.setOption(throughputOption);
+            }
+        }
+
+        function initializeAnimations() {
+            // Animate tech cards on scroll
+            const techCards = document.querySelectorAll('.tech-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [30, 0],
+                            duration: 800,
+                            easing: 'easeOutQuart',
+                            delay: Math.random() * 200
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            techCards.forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+        }
+
+        // Download document function
+        function downloadDocument(type) {
+            // Simulate document download
+            const documents = {
+                datasheet: 'IFDSS_System_Datasheet.pdf',
+                installation: 'IFDSS_Installation_Guide.pdf',
+                api: 'IFDSS_API_Documentation.pdf'
+            };
+            
+            // Show notification
+            showNotification(`Downloading ${documents[type]}...`, 'success');
+            
+            // In a real implementation, this would trigger an actual download
+            setTimeout(() => {
+                showNotification('Download completed successfully!', 'success');
+            }, 2000);
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform translate-x-full transition-transform duration-300`;
+            
+            switch (type) {
+                case 'success':
+                    notification.classList.add('bg-green-600', 'text-white');
+                    break;
+                case 'error':
+                    notification.classList.add('bg-red-600', 'text-white');
+                    break;
+                case 'warning':
+                    notification.classList.add('bg-yellow-600', 'text-white');
+                    break;
+                default:
+                    notification.classList.add('bg-blue-600', 'text-white');
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-1">${message}</div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
